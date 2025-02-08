@@ -6,21 +6,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SubscriptionService {
     @Autowired
-    private SubscriptionRepository subscriptionRepository;
+    private final SubscriptionRepository subscriptionRepository;
+
+    public SubscriptionService(SubscriptionRepository subscriptionRepository) {
+        this.subscriptionRepository = subscriptionRepository;
+    }
+
+    public List<Subscription> getAllSubscriptions() {
+        return subscriptionRepository.findAll();
+    }
+
+    public Subscription getSubscriptionById(Long id) {
+        Optional<Subscription> subscription = subscriptionRepository.findById(id);
+        return subscription.orElse(null);
+    }
 
     public Subscription addSubscription(Subscription subscription) {
         return subscriptionRepository.save(subscription);
     }
 
-    public List<Subscription> getSubscriptionsByCustomerId(Long _customerId) {
-        return subscriptionRepository.findByCustomerId(_customerId);
+    public Subscription updateSubscription(Subscription subscription) {
+        return subscriptionRepository.save(subscription);
     }
-    public Subscription getSubscriptionById(Long id) {
+
+    public void deleteSubscription(Long id) {
         subscriptionRepository.deleteById(id);
-        return null;
     }
 }

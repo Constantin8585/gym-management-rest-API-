@@ -17,5 +17,51 @@ public class Subscription {
     private Pack pack;
     private LocalDate startDate;
     private boolean activeSubscription;
+    
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public Customer getCustomer() {
+        return customer;
+    }
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+    public Pack getPack() {
+        return pack;
+    }
+    public void setPack(Pack pack) {
+        this.pack = pack;
+    }
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+    public boolean isActiveSubscription() {
+        return activeSubscription;
+    }
+    public void setActiveSubscription(boolean activeSubscription) {
+        this.activeSubscription = activeSubscription;
+    }
+    public Subscription(Long id, Customer customer, Pack pack, LocalDate startDate, boolean activeSubscription) {
+        this.id = id;
+        this.customer = customer;
+        this.pack = pack;
+        this.startDate = startDate;
+        this.activeSubscription = activeSubscription;
+    }
+    public Subscription() {
+    }
+    public Subscription(Customer customer, Pack pack, LocalDate startDate, boolean activeSubscription) {
+        this.customer = customer;
+        this.pack = pack;
+        this.startDate = startDate;
+        this.activeSubscription = activeSubscription;
+    }
 
 }
