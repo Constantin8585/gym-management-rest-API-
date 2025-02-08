@@ -23,6 +23,11 @@ public class CustomerController {
         return customerService.getAllCustomers();
     }
 
+    @GetMapping("/{id}")
+    public Customer getCustomerById(@PathVariable Long id) {
+        return customerService.getCustomerById(id);
+    }
+
     @PostMapping
     public Customer addCustomer(@RequestBody Customer customer) {
         System.out.println(customer.getFirstName());
@@ -36,17 +41,27 @@ public class CustomerController {
         customer1.setFirstName("John");
         customer1.setRegistrationDate(LocalDate.of(2024, 1, 1));
         customer1.setPhoneNumber("123456789");
-        
 
         Customer customer2 = new Customer();
         customer2.setLastName("Smith");
         customer2.setFirstName("Anna");
         customer2.setRegistrationDate(LocalDate.of(2023, 5, 12));
         customer2.setPhoneNumber("987654321");
-        
+
         customerService.addCustomer(customer1);
         customerService.addCustomer(customer2);
 
         return "Données initialisées";
+    }
+
+    @PutMapping("/{id}")
+    public Customer updateCustomer(@PathVariable Long id, @RequestBody Customer customer) {
+        customer.setId(id);
+        return customerService.updateCustomer(customer);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCustomer(@PathVariable Long id) {
+        customerService.deleteCustomer(id);
     }
 }
