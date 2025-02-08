@@ -16,5 +16,6 @@ public class Subscription {
     @JoinColumn(name = "pack_id")
     private Pack pack;
     private LocalDate startDate;
+    private boolean activeSubscription;
 
 }

@@ -17,4 +17,5 @@ public class Pack {
     private String offerName;
     private int durationMonths;
     private double monthlyPrice;
+
 }
