@@ -2,6 +2,7 @@ package com.gym.gym_app.service;
 
 import com.gym.gym_app.entity.User;
 import com.gym.gym_app.repository.UserRepository;
+import com.gym.gym_app.util.PasswordEncoderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,10 +28,12 @@ public class UserService {
     }
 
     public User addUser(User user) {
+        user.setPassword(PasswordEncoderUtil.encodePassword(user.getPassword()));
         return userRepository.save(user);
     }
 
     public User updateUser(User user) {
+        user.setPassword(PasswordEncoderUtil.encodePassword(user.getPassword()));
         return userRepository.save(user);
     }
 
