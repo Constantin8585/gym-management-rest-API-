@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
+//@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class AuthController {
@@ -21,6 +22,7 @@ public class AuthController {
         this.userDetailsService = userDetailsService;
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/authenticate")
     public String createAuthenticationToken(@RequestBody AuthRequest authRequest) throws Exception {
         authenticationManager.authenticate(
