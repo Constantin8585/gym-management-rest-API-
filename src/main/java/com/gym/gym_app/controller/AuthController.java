@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-//@CrossOrigin(origins = "http://localhost:4200")
+
 @RestController
 @RequestMapping("/api")
 public class AuthController {
@@ -26,15 +26,6 @@ public class AuthController {
         this.userDetailsService = userDetailsService;
     }
 
-//    @CrossOrigin(origins = "http://localhost:4200")
-//    @PostMapping("/authenticate")
-//    public String createAuthenticationToken(@RequestBody AuthRequest authRequest) throws Exception {
-//        authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
-//        );
-//        final UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername());
-//        return jwtUtil.generateToken(userDetails.getUsername());
-//    }
 @PostMapping("/authenticate")
 public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthRequest authRequest) {
     System.out.println("Requête reçue pour l'utilisateur : " + authRequest.getUsername()); // 🔥 Debug
@@ -52,9 +43,7 @@ public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthRequest auth
     String token = jwtUtil.generateToken(userDetails.getUsername());
 
     System.out.println("Token généré : " + token); // 🔥 Debug
-    return ResponseEntity.ok(Map.of("token", token));
+    return ResponseEntity.ok(Map.of("token", token , "username", authRequest.getUsername()));
 }
-
-
 
 }
