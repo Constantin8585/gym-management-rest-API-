@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-
 @RestController
 @RequestMapping("/api")
 public class AuthController {
@@ -26,24 +25,24 @@ public class AuthController {
         this.userDetailsService = userDetailsService;
     }
 
-@PostMapping("/authenticate")
-public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthRequest authRequest) {
-    System.out.println("Requête reçue pour l'utilisateur : " + authRequest.getUsername()); // 🔥 Debug
+    @PostMapping("/authenticate")
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthRequest authRequest) {
+        System.out.println("Requête reçue pour l'utilisateur : " + authRequest.getUsername()); // 🔥 Debug
 
-    try {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
-        );
-    } catch (Exception e) {
-        System.out.println("Échec de connexion pour : " + authRequest.getUsername()); // 🔥 Debug
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Invalid username or password"));
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
+            );
+        } catch (Exception e) {
+            System.out.println("Échec de connexion pour : " + authRequest.getUsername()); // 🔥 Debug
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Invalid username or password"));
+        }
+
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername());
+        String role = userDetails.getAuthorities().stream().findFirst().get().getAuthority();
+        String token = jwtUtil.generateToken(userDetails.getUsername(), role);
+
+        System.out.println("Token généré : " + token); // 🔥 Debug
+        return ResponseEntity.ok(Map.of("token", token, "username", authRequest.getUsername(), "role", role));
     }
-
-    final UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername());
-    String token = jwtUtil.generateToken(userDetails.getUsername());
-
-    System.out.println("Token généré : " + token); // 🔥 Debug
-    return ResponseEntity.ok(Map.of("token", token , "username", authRequest.getUsername()));
-}
-
 }

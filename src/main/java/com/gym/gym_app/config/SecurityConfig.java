@@ -43,7 +43,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(withDefaults()) // Activer la gestion des requêtes cross-origin
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/authenticate", "/api/users","/api/customers/**","/api/packs/**", "/api/subscriptions/**").permitAll()
+                        .requestMatchers("/api/authenticate", "/api/users","/api/customers/**","/api/packs/**", "/api/subscriptions/**","/api/users/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
